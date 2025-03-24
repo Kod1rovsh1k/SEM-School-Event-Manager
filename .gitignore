@@ -1,0 +1,38 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.egg-info/
+dist/
+build/
+wheels/
+
+# IDE
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+.vscode/
+
+# Virtual environments
+.venv/
+venv/
+env/
+envs/
+.env
+
+# Log files
+*.log
+
+# Database files
+*.sqlite3
+*.db
+
+# Pytest cache
+.cache/
+pytest_cache/
+
+# Cython debug symbols
+cython_debug/
