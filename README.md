@@ -3,15 +3,17 @@
 # 📌 How install ?
 
 Any questions on how to install ?
-> mkdir 'YOUR_NAME_ROOT_DIR'
-> 
-> git clone https://github.com/Kod1rovsh1k/SEM-School-Event-Manager.git
->
-> uv venv
->
-> uv add -r requirements.txt
-> 
-> uv list 
+```
+mkdir 'YOUR_NAME_ROOT_DIR'
+ 
+git clone https://github.com/Kod1rovsh1k/SEM-School-Event-Manager.git
+
+uv venv
+
+uv add -r requirements.txt
+ 
+uv list 
+```
 
 # 🔖 Description
 This project was created for create your notes. 
