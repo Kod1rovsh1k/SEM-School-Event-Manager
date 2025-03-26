@@ -3,6 +3,7 @@
 import os
 import sys
 
+from backend import *
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +20,5 @@ def main():
 
 
 if __name__ == '__main__':
+    run_back()
     main()
