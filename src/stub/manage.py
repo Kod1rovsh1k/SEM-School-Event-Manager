@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
+
 import os
 import sys
 
-from backend import *
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
+
+from app.backend.database import run_back
 
 def main():
     """Run administrative tasks."""
@@ -18,7 +21,9 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-
 if __name__ == '__main__':
-    run_back()
-    main()
+    try:
+        run_back()
+        main()
+    except ImportError as exc:
+        print(exc)

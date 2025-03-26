@@ -1,4 +1,4 @@
-from .app import *
+from stub import *
 
 __all__ = [
     "setup_run",

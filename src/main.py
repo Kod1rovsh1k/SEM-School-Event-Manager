@@ -1,6 +1,6 @@
 import asyncio
 
-from app import *
+from stub import *
 
 async def main():
     await setup_run()

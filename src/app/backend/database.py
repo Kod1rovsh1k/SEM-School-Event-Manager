@@ -4,15 +4,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from django.conf import settings
+
 init(autoreset=True)
 
 class Database:
     engine = create_engine(f'sqlite:///app/backend/database.db', echo=False)
     Session = sessionmaker(bind=engine)
     BASE = declarative_base()
-
-    def __init__(self):
-        self.BASE.metadata.create_all(self.engine)
 
     def get_session(self):
         return self.Session()

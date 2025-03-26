@@ -18,7 +18,7 @@ async def setup_run(env: str = "./.env" or None) -> None:
     else:
         os.system("cls" if os.name == "nt" else "clear")
         print(f'{Fore.GREEN}[+] {Fore.WHITE}Website was started {Fore.GREEN}<3')
-        os.system(f"uv run app/manage.py runserver")
+        os.system(f"uv run stub/manage.py runserver")
 
 
 __all__ = [
