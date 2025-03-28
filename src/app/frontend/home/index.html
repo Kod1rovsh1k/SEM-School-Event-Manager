@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/static/style.css' %}">  <!-- Исправьте путь -->
+    <script src="{% static 'home/static/scripts.js' %}"></script>
 </head>
 <body>
-    Hello, World
+    <div class="reg-border">
+        Hello, World
+    </div>
 </body>
 </html>

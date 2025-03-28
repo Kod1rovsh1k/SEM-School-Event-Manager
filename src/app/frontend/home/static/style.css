@@ -1,0 +1,10 @@
+.body {
+    background: aqua;
+}
+
+.reg-border {
+    position: absolute;
+    background-color: aquamarine;
+    margin: 100px;
+    padding: 100px;
+}
