@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register/styles.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="reg-text">
+        <h2>Registration</h2>
+    </div>
+    <form id="registration" method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        <div class="forums-group">
+            <div class="form-group">
+                <label for="username"></label>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email"></label>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password"></label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Password confirm"
+                       required>
+            </div>
+        </div>
+    </form>
+
+    <div class="btn-reg">
+        <button type="submit">Registration</button>
+    </div>
+</div>
+</body>
+</html>

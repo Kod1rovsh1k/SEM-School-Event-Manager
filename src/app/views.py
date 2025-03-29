@@ -2,13 +2,8 @@ from django.shortcuts import render
 
 
 def view(request):
-    return render(
-        request,
-        'home/index.html'
-    )
+    return render(request, 'home/home.html')
 
-def profile(request):
-    return render(
-        request,
-        'profile/profile.html'
-    )
+
+def register(request):
+    return render(request, 'register/register.html')
