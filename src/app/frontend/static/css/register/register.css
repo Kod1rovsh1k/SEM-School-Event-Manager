@@ -1,0 +1,85 @@
+/* styles.css */
+body {
+    font-family: Gill Sans Extrabold, sans-serif;
+    background: rgb(31, 31, 31);
+}
+
+.register-panel {
+    background: rgb(27, 27, 27);
+    color: rgb(255, 255, 255);
+    position: absolute;
+    /*padding: 150px 100px 250px;*/
+    transform: translate(-50%, -50%);
+    padding: 40px 20px;
+    width: 400px;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 4px rgba(172, 255, 47, 0.571);
+    transition: box-shadow 0.5s ease;
+
+    .register-text {
+        font-family: Gill Sans Extrabold, sans-serif;
+        position: relative;
+        padding-bottom: 15px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .forums-group {
+        position: relative;
+        padding: 20px;
+        margin: 0 0 30px;
+    }
+
+    input {
+        background: rgba(73, 73, 73, 0.37);
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        border-radius: 3px;
+        padding: 12px;
+        color: white;
+        width: 100%;
+        transition: all 0.3s ease;
+        margin-bottom: 15px;
+    }
+
+    input:hover {
+        box-shadow: 0 0 1px 1px rgba(119, 193, 8, 0.422);
+    }
+
+    input:focus {
+        box-shadow: 0 0 4px 1px rgba(62, 104, 0, 0.586);
+        border-color: rgb(73, 100, 34);
+        outline: none;
+    }
+
+
+    .button-register {
+        .btn {
+            background-color: rgba(82, 120, 24, 0.512);
+            position: absolute;
+            left: 5%;
+            bottom: 4%;
+            width: 90%;
+            height: 10%;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            font-size: 24px;
+            text-shadow: 0 8px 10px black;
+        }
+
+        :active {
+            transition: 0.5s;
+            transform: scale(0.96);
+        }
+    }
+}
+
+
+.register-panel:hover {
+    box-shadow: 0 0 8px 4px rgba(172, 255, 47, 0.263);
+}

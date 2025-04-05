@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/register/styles.css' %}">
+    <link rel="stylesheet" href="{% static "css/register/register.css" %}">
+    <title>Register</title>
 </head>
 <body>
-<div class="container">
-    <div class="reg-text">
-        <h2>Registration</h2>
-    </div>
-    <form id="registration" method="POST" action="{% url 'register' %}">
-        {% csrf_token %}
+    <div class="register-panel">
+        <div class="register-text">
+            <h1>
+                Are you register.. ?
+            </h1>
+            <h4>If you are already registered, then authenticate yourself <a href="{% url 'login' %}">register</a></h4>
+        </div>
 
         <div class="forums-group">
-            <div class="form-group">
-                <label for="username"></label>
-                <input type="text" id="username" name="username" placeholder="Username" required>
-            </div>
-
             <div class="form-group">
                 <label for="email"></label>
                 <input type="email" id="email" name="email" placeholder="Email" required>
@@ -33,14 +30,13 @@
             <div class="form-group">
                 <label for="confirm_password"></label>
                 <input type="password" id="confirm_password" name="confirm_password" placeholder="Password confirm"
-                       required>
+                    required>
             </div>
         </div>
-    </form>
 
-    <div class="btn-reg">
-        <button type="submit">Registration</button>
+        <div class="button-register">
+            <button type="button" class="btn">Register</button>
+        </div>
     </div>
-</div>
 </body>
 </html>
