@@ -4,10 +4,25 @@
 
 Any questions on how to install ?
 
+You must install this package manager to interact with the project.
+```
+https://github.com/astral-sh/uv
+```
 
+After which you create a new directory. Where the main project will be stored
+```
+mkdir <YOUR-DIRECTORY-NAME>
+```
+```
+cd <YOUR-DIRECTORY-NAME>
+```
+
+**After that, you take and clone the repository, extract all the files from the SEM folder and drag them into the newly created folder for convenient work with it.**
 ```
 git clone https://github.com/Kod1rovsh1k/SEM-School-Event-Manager.git
 ```
+
+**After transferring all project files, we proceed to prepare the project's working environment.**
 ```
 uv venv
 ```
@@ -84,4 +99,4 @@ RootDir/                        # This is your root folder where the full projec
 # 🔖 Description
 This project was created for create your notes. 
 This tools help draw up you for execute your routine tasks and go to them.
-There is also the possibility of tracking progress not only from your side but also from the <b>(teacher and parents)</b>.
+There is also the possibility of tracking progress not only from your side but also from the **(teacher and parents)**.

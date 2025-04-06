@@ -2,6 +2,7 @@ import asyncio
 
 from stub import *
 
+
 async def main():
     await setup_run()
 

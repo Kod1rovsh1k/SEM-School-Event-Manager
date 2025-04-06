@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 init(autoreset=True)
 
+
 class Database:
     engine = create_engine(f'sqlite:///app/backend/database.db', echo=False)
     Session = sessionmaker(bind=engine)
@@ -16,8 +17,6 @@ class Database:
 
 
 def run_back() -> None:
-    from .models import User
-
     db = Database()
     try:
         db.BASE.metadata.create_all(db.engine)
