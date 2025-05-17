@@ -1,0 +1,50 @@
+{% extends "layout/global.html" %}
+
+{% block title %}Реєстрація користувача{% endblock %}
+
+{%  block body %}
+    <div class="container mt-4">
+    <form method="post" class="needs-validation">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-floating mb-3">
+            {{ form.username }}
+            <label for="{{ form.username.id_for_label }}">Логін</label>
+            {{ form.username.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.first_name }}
+            <label for="{{ form.first_name.id_for_label }}">Ім'я</label>
+            {{ form.first_name.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.last_name }}
+            <label for="{{ form.last_name.id_for_label }}">Прізвище</label>
+            {{ form.last_name.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.email }}
+            <label for="{{ form.email.id_for_label }}">E-Mail</label>
+            {{ form.email.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.password1 }}
+            <label for="{{ form.password1.id_for_label }}">Пароль користувача</label>
+            {{ form.password1.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.password2 }}
+            <label for="{{ form.password2.id_for_label }}">Підтвердження пароля</label>
+            {{ form.password2.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.groups }}
+            <label for="{{ form.groups.id_for_label }}">Роль користувача</label>
+            {{ form.groups.errors }}
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="form-control btn btn-primary">Реєстрація</button>
+        </div>
+    </form>
+    </div>
+{% endblock %}

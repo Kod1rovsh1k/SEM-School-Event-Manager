@@ -1,0 +1,355 @@
+{% extends 'layout/global.html' %}
+
+{% block title %}Календар{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center">Календар подій</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ваш календар</h5>
+                    <p class="card-text">Перегляньте ваші заплановані події та заходи.</p>
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <button class="btn btn-outline-primary me-1" onclick="changeView('month')">Місяць</button>
+                            <button class="btn btn-outline-primary me-1" onclick="changeView('week')">Тиждень</button>
+                            <button class="btn btn-outline-primary" onclick="changeView('day')">День</button>
+                        </div>
+                        {% if not user.groups.all.0.name == 'Батьки' %}
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">Додати подію</button>
+                        {% endif %}
+                    </div>
+                    <div id="calendar-view">
+                        <!-- Місячний вигляд -->
+                        <div id="month-view">
+                            <h6>Перегляд за місяць</h6>
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Нд</th>
+                                        <th>Пн</th>
+                                        <th>Вт</th>
+                                        <th>Ср</th>
+                                        <th>Чт</th>
+                                        <th>Пт</th>
+                                        <th>Сб</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="month-body">
+                                    <!-- Динамічне заповнення календаря -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Тижневий вигляд -->
+                        <div id="week-view" style="display:none;">
+                            <h6>Перегляд за тиждень</h6>
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>День</th>
+                                        <th>Дата</th>
+                                        <th>Події</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="week-body">
+                                    <!-- Динамічне заповнення для тижня -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Денний вигляд -->
+                        <div id="day-view" style="display:none;">
+                            <h6>Перегляд за день</h6>
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Година</th>
+                                        <th>Події</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="day-body">
+                                    <!-- Динамічне заповнення для дня -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальне вікно для додавання події -->
+<div class="modal" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEventModalLabel">Add Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'add_event' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Event Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_type">Event Type</label>
+                        <select class="form-control" id="event_type" name="event_type" required>
+                            <option value="exam">Exam</option>
+                            <option value="test">Test</option>
+                            <option value="school_event">School Event</option>
+                            <option value="parent_meeting">Parent Meeting</option>
+                            <option value="personal_event">Personal Event</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="start_time">Start Time</label>
+                        <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Duration (minutes)</label>
+                        <input type="number" class="form-control" id="duration" name="duration" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Description</label>
+                        <textarea class="form-control" id="content" name="content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" name="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="participants">Учасники</label>
+                        <select class="form-control" id="participants" name="participants" multiple required>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.get_full_name|default:user.username }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="form-text text-muted">Виберіть одного або кількох користувачів</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Event</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Дані про події
+    const events = [
+        {% for event in events %}
+            {
+                title: "{{ event.title }}",
+                start_time: "{{ event.start_time|date:'c' }}",
+                event_type: "{{ event.event_type }}"
+            },
+        {% endfor %}
+    ];
+
+    // Функція для перемикання між виглядами
+    function changeView(view) {
+        const monthView = document.getElementById('month-view');
+        const weekView = document.getElementById('week-view');
+        const dayView = document.getElementById('day-view');
+
+        if (view === 'month') {
+            monthView.style.display = 'block';
+            weekView.style.display = 'none';
+            dayView.style.display = 'none';
+        } else if (view === 'week') {
+            monthView.style.display = 'none';
+            weekView.style.display = 'block';
+            dayView.style.display = 'none';
+        } else if (view === 'day') {
+            monthView.style.display = 'none';
+            weekView.style.display = 'none';
+            dayView.style.display = 'block';
+        }
+
+        // Перегляд подій для відповідного виду
+        if (view === 'month') {
+            generateMonthView();
+        } else if (view === 'week') {
+            generateWeekView();
+        } else if (view === 'day') {
+            generateDayView();
+        }
+    }
+
+    // Функція для генерування місячного вигляду календаря
+    function generateMonthView() {
+    const monthBody = document.getElementById('month-body');
+    monthBody.innerHTML = '';
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0-indexed
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const firstWeekday = (firstDay.getDay() + 6) % 7; // Понеділок = 0, Неділя = 6
+
+    let date = 1;
+    const totalDays = lastDay.getDate();
+
+    for (let i = 0; i < 6; i++) { // максимум 6 рядків (тижнів)
+        const row = document.createElement('tr');
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement('td');
+            if ((i === 0 && j < firstWeekday) || date > totalDays) {
+                cell.innerHTML = '';
+            } else {
+                cell.innerHTML = `<strong>${date}</strong>`;
+                const dayEvents = events.filter(event => {
+                    const evDate = new Date(event.start_time);
+                    return evDate.getDate() === date &&
+                        evDate.getMonth() === month &&
+                        evDate.getFullYear() === year;
+                });
+
+                if (dayEvents.length > 0) {
+                    const ul = document.createElement('ul');
+                    ul.style.listStyle = 'none';
+                    ul.style.padding = 0;
+
+                    dayEvents.forEach(ev => {
+                        const li = document.createElement('li');
+                        li.textContent = ev.title;
+
+                        const now = new Date();
+                        const evDate = new Date(ev.start_time);
+
+                        if (evDate < now) {
+                            li.classList.add('text-danger'); // червоний
+                        } else {
+                            li.classList.add('text-success'); // зелений
+                        }
+
+                        ul.appendChild(li);
+                    });
+
+                    cell.appendChild(ul);
+                }
+
+                date++;
+            }
+            row.appendChild(cell);
+        }
+        monthBody.appendChild(row);
+        if (date > totalDays) break;
+    }
+}
+
+    // Функція для генерування тижневого вигляду
+   function generateWeekView() {
+    const weekBody = document.getElementById('week-body');
+    weekBody.innerHTML = '';
+
+    const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+    const today = new Date();
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7)); // понеділок
+
+    for (let i = 0; i < 7; i++) {
+        const row = document.createElement('tr');
+
+        const dayNameCell = document.createElement('td');
+        dayNameCell.textContent = daysOfWeek[i];
+
+        const currentDate = new Date(weekStart);
+        currentDate.setDate(weekStart.getDate() + i);
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = currentDate.toLocaleDateString('uk-UA', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        const eventsCell = document.createElement('td');
+        const dayEvents = events.filter(event => {
+            const evDate = new Date(event.start_time);
+            return evDate.getDate() === currentDate.getDate() &&
+                evDate.getMonth() === currentDate.getMonth() &&
+                evDate.getFullYear() === currentDate.getFullYear();
+        });
+
+        if (dayEvents.length > 0) {
+            const ul = document.createElement('ul');
+            ul.style.listStyle = 'none';
+            ul.style.padding = 0;
+
+            dayEvents.forEach(ev => {
+                const li = document.createElement('li');
+                li.textContent = ev.title;
+
+                const evDate = new Date(ev.start_time);
+                li.classList.add(evDate < new Date() ? 'text-danger' : 'text-success');
+
+                ul.appendChild(li);
+            });
+
+            eventsCell.appendChild(ul);
+        }
+
+        row.appendChild(dayNameCell);
+        row.appendChild(dateCell);
+        row.appendChild(eventsCell);
+        weekBody.appendChild(row);
+    }
+}
+    // Функція для генерування денного вигляду
+    function generateDayView() {
+    const dayBody = document.getElementById('day-body');
+    dayBody.innerHTML = '';
+
+    const today = new Date();
+    const currentDateStr = today.toLocaleDateString('uk-UA');
+
+    for (let hour = 0; hour < 24; hour++) {
+        const row = document.createElement('tr');
+
+        // Колонка з годиною
+        const timeCell = document.createElement('td');
+        timeCell.textContent = `${hour.toString().padStart(2, '0')}:00`;
+        row.appendChild(timeCell);
+
+        // Колонка з подіями на цю годину
+        const eventsCell = document.createElement('td');
+
+        const hourEvents = events.filter(event => {
+            const evDate = new Date(event.start_time);
+            return evDate.getFullYear() === today.getFullYear() &&
+                evDate.getMonth() === today.getMonth() &&
+                evDate.getDate() === today.getDate() &&
+                evDate.getHours() === hour;
+        });
+
+        if (hourEvents.length > 0) {
+            const ul = document.createElement('ul');
+            ul.style.listStyle = 'none';
+            ul.style.padding = 0;
+
+            hourEvents.forEach(ev => {
+                const li = document.createElement('li');
+                li.textContent = ev.title;
+                li.classList.add(new Date(ev.start_time) < new Date() ? 'text-danger' : 'text-success');
+                ul.appendChild(li);
+            });
+
+            eventsCell.appendChild(ul);
+        }
+
+        row.appendChild(eventsCell);
+        dayBody.appendChild(row);
+    }
+}
+    // За замовчуванням показуємо місячний вигляд
+    changeView('month');
+</script>
+
+{% endblock %}

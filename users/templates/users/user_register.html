@@ -1,0 +1,93 @@
+{% extends "layout/global.html" %}
+{% load form_filters %}
+
+{% block title %}Реєстрація користувача{% endblock %}
+
+{%  block body %}
+    <div class="container mt-4">
+    <form method="post" class="needs-validation">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-floating mb-3">
+            {% if form.username.errors %}
+                    {{ form.username|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.username|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.username|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.username.id_for_label }}">Логін</label>
+            {{ form.username.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.first_name.errors %}
+                    {{ form.first_name|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.first_name|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.first_name|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.first_name.id_for_label }}">Ім'я</label>
+            {{ form.first_name.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.last_name.errors %}
+                    {{ form.last_name|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.last_name|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.last_name|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.last_name.id_for_label }}">Прізвище</label>
+            {{ form.last_name.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.email.errors %}
+                    {{ form.email|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.email|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.email|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.email.id_for_label }}">E-Mail</label>
+            {{ form.email.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.password1.errors %}
+                    {{ form.password1|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.password1|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.password1|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.password1.id_for_label }}">Пароль користувача</label>
+            {{ form.password1.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.password2.errors %}
+                    {{ form.password2|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.password2|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.password2|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.password2.id_for_label }}">Підтвердження пароля</label>
+            {{ form.password2.errors }}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.groups.errors %}
+                    {{ form.groups|add_class:"form-control is-invalid" }}
+                {% elif form.is_bound %}
+                    {{ form.groups|add_class:"form-control is-valid" }}
+                {% else %}
+                    {{ form.groups|add_class:"form-control" }}
+            {% endif %}
+            <label for="{{ form.groups.id_for_label }}">Роль користувача</label>
+            {{ form.groups.errors }}
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="form-control btn btn-primary">Реєстрація</button>
+        </div>
+    </form>
+    </div>
+{% endblock %}

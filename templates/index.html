@@ -1,0 +1,31 @@
+{% extends 'layout/global.html' %}
+
+{% block title %}Index page{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">Ласкаво просимо до системи управління подіями</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card text-bg-light mb-1">
+                    <h5 class="card-header">
+                        Календар подій
+                    </h5>
+                    <div class="card-body">
+                        <p class="card-text">Перегляньте ваші заплановані події та завдання.</p>
+                        <a href="{% url 'calendar' %}" class="btn btn-primary">Відкрити</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-bg-light mb-1">
+                    <h5 class="card-header">Список завдань</h5>
+                    <div class="card-body">
+                        <p class="card-text">Перегляньте та відзначте виконані завдання.</p>
+                        <a href="{% url 'tasks' %}" class="btn btn-primary">Відкрити</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

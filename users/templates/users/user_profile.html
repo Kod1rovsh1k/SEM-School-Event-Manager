@@ -1,0 +1,24 @@
+{% extends 'layout/global.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">Профіль користувача</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img src="profile-pic.jpg" class="rounded-circle mb-3" width="150" alt="Фото профілю">
+                        <h4>{{ user.first_name }} {{user.last_name}}</h4>
+                        <p>Логін: {{ user.username }}</p>
+                        <p>Email: {{ user.email }}</p>
+                        <p>Дата народження: 01.01.2000</p>
+                        <p>Роль: under_construction</p>
+                        <button class="btn btn-primary">Редагувати профіль</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
