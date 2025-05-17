@@ -1,4 +1,5 @@
-School Event Manager
+## School Event Manager
+
 📌 Efficient Event and Task Management for Schools
 Project Overview
 School Event Manager is a web-based application designed to streamline school event organization, task management, and user collaboration. It allows administrators, teachers, students, and parents to plan events, track assignments, and enhance communication within the school community.
